@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DosenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,19 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::prefix('/dosen')->group(function () {
-
-    Route::get('/profil', function (){
-        $title = "Halaman Profil Dosen";
-        $teks = "INI HALAMAN PROFIL DOSEN";
-
-        return view('dosen.index', compact ('title', 'teks'));
-    })->name('dosen.profil');
-
-    Route::get('/data_pengampu', function (){
-        $title = "Halaman Mata Kuliah";
-        $teks = "INI HALAMAN DATA MATA KULIAH YANG DIAMPU";
-
-        return view('dosen/index', compact('title', 'teks'));
-    })->name('dosen.data_pengampu');
+Route::group(['prefix' => '/dosen'], function() {
+    Route::get('/profil', [DosenController::class, 'profil'])->name('dosen.profil');
+    Route::get('/data_ampu', [DosenController::class, 'index'])->name('dosen.dataampu');
 });
